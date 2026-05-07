@@ -1,0 +1,55 @@
+# Memory Bounded A* Algorithm - Simple Version
+
+graph = {
+    'A': [('B', 1), ('C', 3)],
+    'B': [('D', 3), ('E', 1)],
+    'C': [('F', 5)],
+    'D': [],
+    'E': [('G', 2)],
+    'F': [],
+    'G': []
+}
+
+# Heuristic values
+h = {
+    'A': 6,
+    'B': 4,
+    'C': 5,
+    'D': 3,
+    'E': 2,
+    'F': 6,
+    'G': 0
+}
+
+memory_limit = 5
+
+def memory_bounded_astar(start, goal):
+    open_list = [(start, 0, [start])]  # node, cost, path
+
+    while open_list:
+        # Sort based on f(n)=g(n)+h(n)
+        open_list.sort(key=lambda x: x[1] + h[x[0]])
+
+        current, cost, path = open_list.pop(0)
+
+        print("Visiting:", current)
+
+        if current == goal:
+            return path, cost
+
+        for neighbor, weight in graph[current]:
+            new_cost = cost + weight
+            new_path = path + [neighbor]
+
+            open_list.append((neighbor, new_cost, new_path))
+
+        # Memory bounded condition
+        if len(open_list) > memory_limit:
+            open_list.pop()
+
+    return None, None
+
+path, cost = memory_bounded_astar('A', 'G')
+
+print("\nGoal Path:", path)
+print("Total Cost:", cost)
