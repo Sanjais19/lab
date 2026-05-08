@@ -1,0 +1,62 @@
+<!-- student.xml -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<students xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+          xsi:noNamespaceSchemaLocation="student.xsd">
+
+    <student>
+        <id>101</id>
+        <name>Pavan</name>
+        <department>CSE</department>
+        <year>3</year>
+        <email>pavan@gmail.com</email>
+    </student>
+
+    <student>
+        <id>102</id>
+        <name>Arun</name>
+        <department>IT</department>
+        <year>2</year>
+        <email>arun@gmail.com</email>
+    </student>
+
+</students>
+
+
+
+
+
+
+
+
+
+<!-- student.xsd -->
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+    <xs:element name="students">
+        <xs:complexType>
+            <xs:sequence>
+
+                <xs:element name="student" maxOccurs="unbounded">
+                    <xs:complexType>
+                        <xs:sequence>
+
+                            <xs:element name="id" type="xs:int"/>
+                            <xs:element name="name" type="xs:string"/>
+                            <xs:element name="department" type="xs:string"/>
+                            <xs:element name="year" type="xs:int"/>
+                            <xs:element name="email" type="xs:string"/>
+
+                        </xs:sequence>
+                    </xs:complexType>
+                </xs:element>
+
+            </xs:sequence>
+        </xs:complexType>
+    </xs:element>
+
+</xs:schema>
