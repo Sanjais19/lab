@@ -1,0 +1,91 @@
+Dim db As Database
+Dim rs As Recordset
+
+Private Sub Command1_Click()
+Form3.Show
+End Sub
+
+Private Sub Command2_Click()
+Form4.Show
+End Sub
+
+Private Sub Command3_Click()
+Form5.Show
+End Sub
+
+Private Sub Form_Load()
+Set db = OpenDatabase("INVENTORY.MDB")
+Set rs = db.OpenRecordset("SYSTEM")
+End Sub
+
+
+
+
+Dim db As Database
+Dim rs As Recordset
+
+Private Sub Command2_Click()
+rs.MoveFirst
+For i = 1 To rs.RecordCount
+If rs(0) = Text1.Text Then
+    rs.Edit
+    rs(6) = Text7.Text
+    rs(7) = rs(5) * rs(6)
+    rs(4) = rs(4) + Val(Text7.Text)
+    rs.Update
+End If
+rs.MoveNext
+Next i
+End Sub
+
+
+
+
+Private Sub Command1_Click()
+rs.MoveFirst
+For i = 1 To rs.RecordCount
+If rs(0) = Text1.Text Then
+    rs.Edit
+    rs(6) = Text4.Text
+
+    If rs(6) <= rs(4) Then
+        rs(7) = rs(5) * rs(6)
+        rs(4) = rs(4) - Val(Text4.Text)
+        rs.Update
+    Else
+        MsgBox "ITEM NOT SUFFICIENT"
+    End If
+End If
+rs.MoveNext
+Next i
+End Sub
+
+
+
+Private Sub Form_Load()
+
+Set db = OpenDatabase("INVENTORY.MDB")
+Set rs = db.OpenRecordset("SYSTEM")
+
+MSFlexGrid1.TextMatrix(0,0)="COMPANY"
+MSFlexGrid1.TextMatrix(0,1)="ADDRESS"
+MSFlexGrid1.TextMatrix(0,2)="CONTACT"
+MSFlexGrid1.TextMatrix(0,3)="ORDER"
+MSFlexGrid1.TextMatrix(0,4)="ITEMS"
+MSFlexGrid1.TextMatrix(0,5)="PRICE"
+
+rs.MoveFirst
+r = 1
+
+Do Until rs.EOF
+    MSFlexGrid1.TextMatrix(r,0)=rs(0)
+    MSFlexGrid1.TextMatrix(r,1)=rs(1)
+    MSFlexGrid1.TextMatrix(r,2)=rs(2)
+    MSFlexGrid1.TextMatrix(r,3)=rs(3)
+    MSFlexGrid1.TextMatrix(r,4)=rs(4)
+    MSFlexGrid1.TextMatrix(r,5)=rs(5)
+
+    r = r + 1
+    rs.MoveNext
+Loop
+End Sub
